@@ -1,6 +1,23 @@
 # Buy or Rent
 
+## [🌐 Open the live calculator →](https://buy-or-rent-web.vercel.app/)
+
+**[Read the project journal](https://danielyaa5.github.io/buy-or-rent-web/)** · Free to use · No account required
+
 Compare the projected wealth from buying a home with renting and investing. Change assumptions and see the result, cash-flow gap, and durable break-even point update immediately.
+
+## Screenshots
+
+![Desktop calculator with home-buying inputs and projected wealth comparison](docs/images/calculator-desktop.png)
+
+<details>
+<summary>See the mobile scenario comparison</summary>
+
+<img src="docs/images/comparison-mobile.png" alt="Mobile comparison of two fictional home-price scenarios" width="330">
+
+</details>
+
+Screenshots use fictional example inputs. Your result depends on the assumptions you enter.
 
 ## Features
 
@@ -67,6 +84,8 @@ Download annual CSV for endpoint wealth and actual period totals, including part
 ## Deploying
 
 Use any host supporting Next.js. Set `NEXT_PUBLIC_SITE_URL` to the intended HTTPS origin **at build time**, for example `https://example.com`, only for a public production deployment. `.env.example` documents the setting. With it unset, the app defaults to `noindex`, disallows crawling, and omits sitemap entries. This is an indexing preference, not access control; protect private previews at the host.
+
+The project journal is a static GitHub Pages site in `docs/`. The calculator is deployed separately on Vercel.
 
 See [RELEASE.md](RELEASE.md) for the release checklist and [SECURITY.md](SECURITY.md) for reporting vulnerabilities. CI repeats the checks on pull requests.
 
