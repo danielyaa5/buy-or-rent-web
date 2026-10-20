@@ -86,7 +86,7 @@ test('prints complete results and assumptions and restores disclosure state', as
   const lastRow = await page.locator('.timeline-details tbody tr').last().boundingBox()
   const assumptions = await page.locator('.print-assumptions').boundingBox()
   expect(lastRow!.y + lastRow!.height).toBeLessThanOrEqual(assumptions!.y)
-  await page.screenshot({ path: testInfo.outputPath('print-layout.png'), fullPage: true })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('print-layout.png'), fullPage: true })
   await page.evaluate(() => window.dispatchEvent(new Event('afterprint')))
   await page.emulateMedia({ media: 'screen' })
   await expect(page.locator('.cost-breakdown')).not.toHaveAttribute('open')
@@ -109,7 +109,7 @@ test('comparison and cost breakdown are accessible and fit the viewport', async 
     await expect(page).toHaveURL(/#results$/)
     await expect(page.locator('.verdict')).toBeInViewport()
   }
-  await page.screenshot({ path: testInfo.outputPath('new-features.png'), fullPage: true })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('new-features.png'), fullPage: true })
 })
 
 test('warns about different horizons and can replace the pinned scenario', async ({ page }) => {

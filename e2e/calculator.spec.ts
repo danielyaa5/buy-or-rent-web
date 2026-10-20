@@ -22,13 +22,13 @@ test('renders the comparison, chart, and detailed controls without runtime error
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Should you buy')
   await expect(page.getByLabel('Home price', { exact: true })).toHaveValue('750000')
   await expect(page.locator('.recharts-area-curve')).toHaveCount(2)
-  await page.screenshot({ path: testInfo.outputPath('01-essentials.png'), fullPage: true })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('01-essentials.png'), fullPage: true })
   await page.locator('.verdict').scrollIntoViewIfNeeded()
-  await page.screenshot({ path: testInfo.outputPath('05-results-viewport.png'), fullPage: false })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('05-results-viewport.png'), fullPage: false })
   await expand(page)
   await page.getByText('See the year-by-year comparison', { exact: true }).click()
   await expect(page.locator('tbody tr')).toHaveCount(10)
-  await page.screenshot({ path: testInfo.outputPath('02-assumptions.png'), fullPage: true })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('02-assumptions.png'), fullPage: true })
   expect(errors).toEqual([])
 })
 
@@ -122,7 +122,7 @@ test('applies rental income, tax controls, and fractional year totals', async ({
   await expect(page.locator('tbody tr')).toHaveCount(2)
   await expect(page.locator('tbody tr').last()).toContainText('1.5 (partial)')
   await expect(page.getByRole('columnheader', { name: 'Net room / ADU' })).toBeVisible()
-  await page.screenshot({ path: testInfo.outputPath('03-rental-and-tax.png'), fullPage: true })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('03-rental-and-tax.png'), fullPage: true })
 })
 
 test('recovers from corrupt storage and malicious enum names', async ({ page }) => {
@@ -190,7 +190,7 @@ test('copies a disclosed fragment link and restores the same scenario from it', 
   const link = await page.evaluate(() => (window as unknown as { copiedLink: string }).copiedLink)
   expect(new URL(link).search).toBe('')
   expect(new URL(link).hash).toContain('#scenario=')
-  await page.screenshot({ path: testInfo.outputPath('04-sharing.png'), fullPage: false })
+  await page.screenshot({ scale: 'css', path: testInfo.outputPath('04-sharing.png'), fullPage: false })
   const other = await context.newPage()
   await open(other, link)
   await expect(other.getByLabel('Home price', { exact: true })).toHaveValue('555000')
@@ -265,6 +265,7 @@ test('edits and reloads shared inputs without reverting to the old link', async 
 
 
 test('keeps every help panel inside the horizontal viewport', async ({ page }) => {
+  test.slow() // This sweep exercises every advanced control, including on shared CI runners.
   await open(page)
   await expand(page)
   const buttons = page.locator('.info-tip-button')
@@ -281,6 +282,7 @@ test('keeps every help panel inside the horizontal viewport', async ({ page }) =
 })
 
 test('keeps every editable numeric control and saved model in sync', async ({ page }) => {
+  test.slow() // This sweep exercises every advanced control, including on shared CI runners.
   await open(page)
   await expand(page)
   await page.getByRole('checkbox', { name: 'Use current-law SALT caps' }).uncheck()
