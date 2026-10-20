@@ -1,0 +1,7 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Non-secret browser local-storage namespace"
+regexTarget = "secret"
+regexes = ['''^buy-or-rent-(scenario-v5|pinned-v1)$''']
