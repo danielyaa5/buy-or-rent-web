@@ -1,8 +1,8 @@
 # Buy or Rent
 
-## [🌐 Open the live calculator →](https://thebuyorrentcalculator.com/)
+## 🌐 [thebuyorrentcalculator.com](https://thebuyorrentcalculator.com/)
 
-**[Read the project journal](https://danielyaa5.github.io/buy-or-rent-web/)** · Free to use · No account required
+**[Open the live calculator →](https://thebuyorrentcalculator.com/)** · [Read the project journal](https://danielyaa5.github.io/buy-or-rent-web/) · Free to use · No account required
 
 Compare the projected wealth from buying a home with renting and investing. Change assumptions and see the result, cash-flow gap, and durable break-even point update immediately.
 
