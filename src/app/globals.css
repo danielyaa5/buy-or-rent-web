@@ -1370,6 +1370,12 @@ footer > span {
 .property-presets summary, .result-details summary { cursor: pointer; font-weight: 700; padding: 10px 0; }
 .preset-actions, .result-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
 .preset-actions button, .result-actions button { min-height: 44px; padding: 10px 14px; border: 1px solid currentColor; border-radius: 8px; font: inherit; background: transparent; color: inherit; cursor: pointer; }
+.preset-actions button { display: inline-flex; align-items: center; gap: 8px; min-width: 104px; justify-content: center; font-weight: 700; transition: background-color .15s, color .15s, transform .1s; }
+.preset-actions button:hover { background: rgba(16, 42, 42, .07); }
+.preset-actions button:active { transform: scale(.97); }
+.preset-actions button.active { border-color: var(--ink); background: var(--ink); color: #fff; }
+.preset-actions button.active svg { color: var(--lime); }
+.property-presets [role="status"]:empty { margin: 0; }
 .result-details { border-top: 1px solid rgba(255,255,255,.2); margin: 20px 0; padding-top: 12px; color: #edf0e9; font-size: 13px; }
 .result-details p, .payoff-note, .pin-notice, .scenario-comparison p { color: #b9c7c3; font-size: 13px; line-height: 1.65; }
 .cost-columns { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 22px; }

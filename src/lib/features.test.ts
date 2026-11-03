@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { calculateBuyOrRent, DEFAULT_INPUTS, sanitizeInputs } from './calculator'
-import { annualCsv, applyPropertyPreset, inputLabel } from './scenario-tools'
+import { activePropertyPreset, annualCsv, applyPropertyPreset, inputLabel, propertyPresetSummary } from './scenario-tools'
 import { inputsFromSearchParams, inputsToSearchParams } from './share'
 
 describe('extra principal', () => {
@@ -53,6 +53,16 @@ describe('property presets and exports', () => {
     expect(condo.annualHomeInsurance).toBe(600)
     expect(Object.keys(DEFAULT_INPUTS).filter(key => condo[key as keyof typeof condo] !== DEFAULT_INPUTS[key as keyof typeof condo]).sort()).toEqual(['annualHomeInsurance', 'maintenanceRate', 'monthlyHoa'])
     expect(applyPropertyPreset(condo, 'house')).toEqual(DEFAULT_INPUTS)
+  })
+  it('reports which preset is in use until one of its values is edited', () => {
+    expect(activePropertyPreset(DEFAULT_INPUTS)).toBe('house')
+    const condo = applyPropertyPreset(DEFAULT_INPUTS, 'condo')
+    expect(activePropertyPreset(condo)).toBe('condo')
+    expect(activePropertyPreset({ ...condo, monthlyHoa: 450 })).toBeNull()
+    expect(activePropertyPreset({ ...DEFAULT_INPUTS, maintenanceRate: 1.5 })).toBeNull()
+    expect(activePropertyPreset({ ...DEFAULT_INPUTS, annualHomeInsurance: 1 })).toBeNull()
+    expect(activePropertyPreset({ ...DEFAULT_INPUTS, homePrice: 400_000 })).toBe('house')
+    expect(propertyPresetSummary(condo)).toBe('$400/month HOA, 0.5% yearly maintenance, and $600/year home insurance')
   })
   it('exports actual partial-period totals with a stable header', () => {
     const r = calculateBuyOrRent({ ...DEFAULT_INPUTS, stayYears: 1.5, monthlyRentalIncome: 1000 })

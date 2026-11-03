@@ -49,10 +49,15 @@ import {
 import { NumberField } from './NumberField'
 import { WealthChart } from './WealthChart'
 import { CostBreakdown, ExportActions, ScenarioComparison } from './ScenarioResults'
-import { applyPropertyPreset, inputLabel } from '@/lib/scenario-tools'
+import { activePropertyPreset, applyPropertyPreset, inputLabel, PropertyPreset, propertyPresetSummary } from '@/lib/scenario-tools'
 
 const STORAGE_KEY = 'buy-or-rent-scenario-v5'
 const PINNED_KEY = 'buy-or-rent-pinned-v1'
+
+const PROPERTY_PRESETS: { key: PropertyPreset; label: string; Icon: typeof Home }[] = [
+  { key: 'house', label: 'House', Icon: Home },
+  { key: 'condo', label: 'Condo', Icon: Building2 },
+]
 
 const OUTLOOKS = {
   cautious: {
@@ -100,7 +105,7 @@ export function BuyOrRentCalculator() {
   const [inputs, setRawInputs] = useState<CalculatorInputs>(DEFAULT_INPUTS)
   const [pinned, setPinned] = useState<CalculatorInputs | null>(null)
   const [pinNotice, setPinNotice] = useState('')
-  const [presetNotice, setPresetNotice] = useState('')
+  const [lastPreset, setLastPreset] = useState<{ preset: PropertyPreset; changed: boolean } | null>(null)
   const [viewingShared, setViewingShared] = useState(false)
   const [savedInputs, setSavedInputs] = useState<CalculatorInputs | null>(null)
   const [storageUnavailable, setStorageUnavailable] = useState(false)
@@ -120,6 +125,13 @@ export function BuyOrRentCalculator() {
   const result = useMemo(() => calculateBuyOrRent(inputs), [inputs])
   const annualTimeline = useMemo(() => getAnnualTimeline(result.timeline), [result])
   const activeOutlook = getActiveOutlook(inputs)
+  const activePreset = activePropertyPreset(inputs)
+  // The notice describes the last click only while its values are still in place.
+  const presetLabel = PROPERTY_PRESETS.find(({ key }) => key === lastPreset?.preset)?.label
+  const presetNotice = !lastPreset || lastPreset.preset !== activePreset ? ''
+    : lastPreset.changed
+      ? `${presetLabel} preset applied: ${propertyPresetSummary(inputs)}. ${lastPreset.preset === 'condo' ? 'Confirm them for your building' : 'Edit them'} under Fine-tune assumptions.`
+      : `${presetLabel} values were already in use: ${propertyPresetSummary(inputs)}.`
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -168,6 +180,12 @@ export function BuyOrRentCalculator() {
       return () => window.cancelAnimationFrame(frame)
     }
   }, [initialized, inputs, viewingShared])
+
+  const applyPreset = (preset: PropertyPreset) => {
+    const next = applyPropertyPreset(inputs, preset)
+    setLastPreset({ preset, changed: activePropertyPreset(inputs) !== preset })
+    setInputs(next)
+  }
 
   const updateInput = (key: NumericInputKey, value: number) => {
     setInputs((current) => ({
@@ -244,7 +262,7 @@ export function BuyOrRentCalculator() {
   const reset = () => {
     setInputs(DEFAULT_INPUTS)
     removePinned()
-    setPresetNotice('')
+    setLastPreset(null)
     setAdvancedOpen(false)
     setShareStatus('')
     shareDialog.current?.close()
@@ -399,9 +417,19 @@ export function BuyOrRentCalculator() {
           <details className="property-presets">
             <summary>Try a property preset</summary>
             <p>These replace HOA, maintenance, and home insurance only. Condo uses illustrative $400/month HOA, 0.5% maintenance, and $600/year insurance. Replace them with your building’s fees and an HO-6 quote; special assessments are not included.</p>
-            <div className="preset-actions">
-              <button type="button" onClick={() => { setInputs(current => applyPropertyPreset(current, 'house')); setPresetNotice('House preset applied. HOA, maintenance, and home insurance updated.') }}>Apply house preset</button>
-              <button type="button" onClick={() => { setInputs(current => applyPropertyPreset(current, 'condo')); setPresetNotice('Condo starter values applied. Confirm HOA, coverage, and maintenance for your building.') }}>Apply condo preset</button>
+            <div className="preset-actions" role="group" aria-label="Property preset">
+              {PROPERTY_PRESETS.map(({ key, label, Icon }) => (
+                <button
+                  key={key}
+                  type="button"
+                  className={activePreset === key ? 'active' : ''}
+                  aria-pressed={activePreset === key}
+                  onClick={() => applyPreset(key)}
+                >
+                  {activePreset === key ? <Check size={16} aria-hidden="true" /> : <Icon size={16} aria-hidden="true" />}
+                  {label}
+                </button>
+              ))}
             </div>
             <p role="status">{presetNotice}</p>
           </details>
