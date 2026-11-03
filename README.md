@@ -1,6 +1,6 @@
 # Buy or Rent
 
-## [🌐 Open the live calculator →](https://buy-or-rent-web.vercel.app/)
+## [🌐 Open the live calculator →](https://thebuyorrentcalculator.com/)
 
 **[Read the project journal](https://danielyaa5.github.io/buy-or-rent-web/)** · Free to use · No account required
 
