@@ -5,7 +5,7 @@
  * The original Vercel address keeps serving beside the custom domain, since saved scenarios live per origin.
  */
 export const ANALYTICS_HOSTS: readonly string[] = ['thebuyorrentcalculator.com', 'buy-or-rent-web.vercel.app']
-export const POSTHOG_TOKEN = 'phc_localtest'
+export const POSTHOG_TOKEN = 'phc_nwgDhGb6PARdCoMRTvPdcAHsKPirhvDi9Xq386XZfvZC'
 export const POSTHOG_SCRIPT = 'https://us-assets.i.posthog.com/static/array.js'
 
 export function analyticsEnabled(hostname: string): boolean {
