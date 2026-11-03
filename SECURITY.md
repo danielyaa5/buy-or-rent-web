@@ -6,4 +6,4 @@ Please do not post credentials, personal financial inputs, or sensitive exploit 
 
 Include affected version, reproduction steps using fictional data, expected behavior, actual impact, and a minimal proof of concept. Please allow time for investigation and a fix before public disclosure.
 
-Scenario links intentionally contain the user's inputs. Do not treat them as anonymous or confidential. The application should not send those inputs to analytics, advertising, or a scenario-storage service.
+Scenario links intentionally contain the user's inputs. Do not treat them as anonymous or confidential. The application should not send those inputs to analytics, advertising, or a scenario-storage service. Production counts anonymous page views with PostHog in cookieless mode; `src/lib/analytics.ts` removes the query string and fragment from every address before an event is sent.

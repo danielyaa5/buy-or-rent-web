@@ -1303,7 +1303,7 @@ export function BuyOrRentCalculator() {
 
       <section className="method-section privacy-section" id="privacy">
         <h2>Your scenario and privacy</h2>
-        <p>Calculations run in your browser. This app has no analytics and saves inputs only in this browser’s local storage. Pinned scenario A also stays in this browser. Reset replaces saved inputs with the defaults and removes the pinned scenario.</p>
+        <p>Calculations run in your browser, and your inputs are saved only in this browser’s local storage. The site counts anonymous page views without cookies, and it never sends your inputs: page addresses leave without anything after the ? or # character. Pinned scenario A also stays in this browser. Reset replaces saved inputs with the defaults and removes the pinned scenario.</p>
         <p>Sharing is optional. A scenario link contains all your inputs, including income and ZIP code, and anyone with the link can read them. New links put inputs after the # character so they are not sent in page requests. Your hosting provider may retain normal access logs; older query-based links can include inputs in those logs.</p>
         <p>Loan rates and insurance fees are editable estimates, not eligibility checks or lender quotes. Mixed-use rental taxes, depreciation, recapture, and detailed sale-basis adjustments are not modeled. Federal projections start in 2026; future brackets are assumptions.</p>
       </section>

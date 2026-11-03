@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Manrope } from 'next/font/google'
 
+import { Analytics } from '@/components/Analytics'
 import { getSiteUrl } from '@/lib/site'
 
 import './globals.css'
@@ -63,6 +64,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${display.variable} ${body.variable}`}>
         {children}
+        <Analytics />
       </body>
     </html>
   )

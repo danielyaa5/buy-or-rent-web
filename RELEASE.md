@@ -22,7 +22,7 @@
 
 - Set the HTTPS production origin at build time and protect private previews at the host.
 - Verify the deployed main flow, saved scenarios, fragment links, mobile layout, reset, privacy text, robots, sitemap, and canonical URL.
-- Verify runtime requests do not include financial inputs or analytics calls.
+- Verify runtime requests do not include financial inputs. The only analytics requests are PostHog's cookieless page views on the live site, with addresses sent without their query string or fragment.
 - Check performance on a representative slower device and connection. Browser emulation alone does not establish real-device performance.
 - Confirm current tax rules, dated data-source labels, editable loan rates, and limitations are visible.
 - Confirm the host's security updates and access-log retention settings.
